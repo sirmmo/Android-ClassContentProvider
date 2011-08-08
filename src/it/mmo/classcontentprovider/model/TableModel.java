@@ -4,7 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class TableModel implements SqlObject {
-	List<RowModel> rows = new LinkedList<RowModel>();
+	List<ColumnModel> rows = new LinkedList<ColumnModel>();
 	String name = "";
 
 	String all_rows_mime = "";
@@ -18,7 +18,7 @@ public class TableModel implements SqlObject {
 		b.append(' ');
 		b.append(" ( ");
 		int rc = rows.size();
-		for (RowModel r : rows) {
+		for (ColumnModel r : rows) {
 			rc--;
 			b.append(r.toSQL());
 			if (rc > 0)
@@ -28,11 +28,11 @@ public class TableModel implements SqlObject {
 		return b.toString();
 	}
 
-	public List<RowModel> getRows() {
+	public List<ColumnModel> getRows() {
 		return rows;
 	}
 
-	public void addRow(RowModel row){
+	public void addRow(ColumnModel row){
 		rows.add(row);
 	}
 
@@ -61,7 +61,7 @@ public class TableModel implements SqlObject {
 	}
 	
 	public String getPK(){
-		for (RowModel r : getRows()) {
+		for (ColumnModel r : getRows()) {
 			if (r.isPk())
 				return r.name;
 		}

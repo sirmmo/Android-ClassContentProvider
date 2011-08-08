@@ -1,4 +1,4 @@
-package it.mmo.classcontentprovider.annotations.row;
+package it.mmo.classcontentprovider.annotations.column;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -7,7 +7,6 @@ import java.lang.annotation.Target;
 
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Row {
-	String name();
+public @interface PrimaryKey {
 
 }

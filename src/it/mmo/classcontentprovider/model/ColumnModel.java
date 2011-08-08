@@ -2,7 +2,7 @@ package it.mmo.classcontentprovider.model;
 
 import java.lang.reflect.Type;
 
-public class RowModel implements SqlObject {
+public class ColumnModel implements SqlObject {
 	String name;
 	Type datatype;
 

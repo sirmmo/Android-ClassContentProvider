@@ -9,12 +9,12 @@ import java.util.LinkedList;
 import java.util.List;
 
 import it.mmo.classcontentprovider.annotations.Authority;
-import it.mmo.classcontentprovider.annotations.row.Autoincrement;
-import it.mmo.classcontentprovider.annotations.row.PrimaryKey;
-import it.mmo.classcontentprovider.annotations.row.Row;
+import it.mmo.classcontentprovider.annotations.column.Autoincrement;
+import it.mmo.classcontentprovider.annotations.column.PrimaryKey;
+import it.mmo.classcontentprovider.annotations.column.Column;
 import it.mmo.classcontentprovider.annotations.table.MimeType;
 import it.mmo.classcontentprovider.annotations.table.Table;
-import it.mmo.classcontentprovider.model.RowModel;
+import it.mmo.classcontentprovider.model.ColumnModel;
 import it.mmo.classcontentprovider.model.TableModel;
 import android.content.ContentProvider;
 import android.content.ContentValues;
@@ -53,13 +53,13 @@ public class ClassContentProvider extends ContentProvider {
 		db_name = p.toString() + ".db";
 		tab.setName(table.name());
 		for (Field f : t.getFields()) {
-			Row row = f.getAnnotation(Row.class);
+			Column row = f.getAnnotation(Column.class);
 			if (row != null) {
 				if (f.getType().getPackage().equals(p)) {
 					String fk = this.provideClass(f.getType());
 					_fks.put(tab.getName(), fk);
 				}
-				RowModel r = new RowModel();
+				ColumnModel r = new ColumnModel();
 				r.setName(row.name());
 				r.setDatatype(f.getType());
 				if (f.getAnnotation(PrimaryKey.class) != null)
@@ -68,6 +68,10 @@ public class ClassContentProvider extends ContentProvider {
 					r.setAi(true);
 				tab.addRow(r);
 			}
+		}
+		
+		if (tab.getPK() == null){
+			
 		}
 		String company = t.getAnnotation(MimeType.class).company();
 		tab.setAll_rows_mime(company, t.getName().toLowerCase());
@@ -85,7 +89,7 @@ public class ClassContentProvider extends ContentProvider {
 	public List<String> getColumns(String table_name) {
 		TableModel t = _tables.get(table_name);
 		List<String> ret = new LinkedList<String>();
-		for (RowModel r : t.getRows()) {
+		for (ColumnModel r : t.getRows()) {
 			ret.add(r.getName());
 		}
 		return ret;
