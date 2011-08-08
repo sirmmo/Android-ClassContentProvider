@@ -1,0 +1,5 @@
+Usage:
+
+- import the JAR file of the application
+- Create class that extends ClassContentProvider
+- in constructor invoke provideClass for every type of resource you want to expose with the provider.

@@ -81,7 +81,7 @@ public class ClassContentProvider extends ContentProvider {
 		max += 2;
 		return tab.getName();
 	}
-
+	
 	public List<String> getColumns(String table_name) {
 		TableModel t = _tables.get(table_name);
 		List<String> ret = new LinkedList<String>();
