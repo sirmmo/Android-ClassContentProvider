@@ -1,32 +1,29 @@
 package it.mmo.classcontentprovider;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Type;
-import java.util.Dictionary;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-
 import it.mmo.classcontentprovider.annotations.Authority;
 import it.mmo.classcontentprovider.annotations.column.Autoincrement;
-import it.mmo.classcontentprovider.annotations.column.PrimaryKey;
 import it.mmo.classcontentprovider.annotations.column.Column;
+import it.mmo.classcontentprovider.annotations.column.PrimaryKey;
 import it.mmo.classcontentprovider.annotations.table.MimeType;
 import it.mmo.classcontentprovider.annotations.table.Table;
 import it.mmo.classcontentprovider.model.ColumnModel;
 import it.mmo.classcontentprovider.model.TableModel;
+
+import java.lang.reflect.Field;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+
 import android.content.ContentProvider;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
-import android.text.TextUtils;
 
 public class ClassContentProvider extends ContentProvider {
 
@@ -66,12 +63,17 @@ public class ClassContentProvider extends ContentProvider {
 					r.setPk(true);
 				if (f.getAnnotation(Autoincrement.class) != null)
 					r.setAi(true);
-				tab.addRow(r);
+				tab.addColumn(r);
 			}
 		}
 		
 		if (tab.getPK() == null){
-			
+			ColumnModel cm = new ColumnModel();
+			cm.setName("_id");
+			cm.setDatatype(Integer.class);
+			cm.setAi(true);
+			cm.setPk(true);
+			tab.addColumn(cm);
 		}
 		String company = t.getAnnotation(MimeType.class).company();
 		tab.setAll_rows_mime(company, t.getName().toLowerCase());

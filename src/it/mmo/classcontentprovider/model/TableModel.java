@@ -32,7 +32,7 @@ public class TableModel implements SqlObject {
 		return rows;
 	}
 
-	public void addRow(ColumnModel row){
+	public void addColumn(ColumnModel row){
 		rows.add(row);
 	}
 
