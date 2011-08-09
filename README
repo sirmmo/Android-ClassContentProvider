@@ -2,4 +2,9 @@ Usage:
 
 - import the JAR file of the application
 - Create class that extends ClassContentProvider
+- Prepare your model
+-- Annotate the classes with both @Table and @Authority
+-- Annotate the fields with @Column and the primarykey fields with @PrimaryKey. If the field is integer and primarykey you can add @Autoincrement.
 - in constructor invoke provideClass for every type of resource you want to expose with the provider.
+
+And it should be done! :)
