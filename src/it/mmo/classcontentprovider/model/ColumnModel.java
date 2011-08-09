@@ -1,6 +1,9 @@
 package it.mmo.classcontentprovider.model;
 
+import it.mmo.classcontentprovider.annotations.table.Table;
+
 import java.lang.reflect.Type;
+import java.util.Date;
 
 public class ColumnModel implements SqlObject {
 	String name;
@@ -26,6 +29,8 @@ public class ColumnModel implements SqlObject {
 			b.append("autoincrement");
 			b.append(" ");
 		}
+		if (fk(datatype))
+			b.append(fk_declaration(datatype));
 		return b.toString();
 	}
 
@@ -70,7 +75,29 @@ public class ColumnModel implements SqlObject {
 	}
 
 	private String TToS(Type t) {
-		return "";
+		if (t.equals(Integer.class)) {
+			return "INTEGER";
+		}
+		if (t.equals(String.class)) {
+			return "TEXT";
+		}
+		if (t.equals(Double.class) || t.equals(Float.class))
+			return "DOUBLE";
+		if (t.equals(Boolean.class) || t.equals(Date.class)
+				|| t.equals(Number.class))
+			return "NUMERIC";
+		return "BLOB";
+	}
+	
+	private boolean fk(Type t){
+		return !(t.getClass().getPackage().toString().startsWith("java") || t.getClass().getPackage().toString().startsWith("android") || t.getClass().getPackage().toString().startsWith("dalvik"));
+	}
+	
+	private String fk_declaration(Type t){
+		StringBuilder b = new StringBuilder();
+		b.append("REFERENCES ");
+		b.append(t.getClass().getAnnotation(Table.class).name());
+		return b.toString();
 	}
 
 }
